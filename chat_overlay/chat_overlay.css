@@ -1,0 +1,18 @@
+/**
+* STYLESHEET FOR CHAT OVERLAY
+*/
+span.username {
+	padding-right: 5px;
+	font-weight: bold;
+}
+
+span.message {
+	color: white;
+	font-weight: bold;
+}
+
+.messageContainer {
+	display: none; /* hidden by default; shown via javascript */
+	font-size: 14pt;
+	margin-bottom: 5px;
+}

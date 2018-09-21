@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>BearlyChat Configuration</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/freelancer.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+<div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="#page-top">BearlyChat</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#portfolio">Config</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#about">About</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <div class="container" id="maincontent" tabindex="-1">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img class="img-responsive" src="img/bearlychat_logo.png" alt="">
+                    <div class="intro-text">
+                        <h1 class="name">BearlyChat</h1>
+                        <hr class="star-light">
+                        <span class="skills">Filtered Messages - Important to YOU</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Config Grid Section -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Configuration</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form name="updateConfig" id="form_updateConfig" >
+                    	<div class="row">
+                    		<div class="col-xs-4 form-group-wrapper">
+                    			<div>
+	                    			<h4>Chat Window Properties</h4>
+	                    			<p>These values are used when creating the chat overlay window. When updated, the overlay window will be adjusted accordingly.</p>
+	                   				<div class="form-group floating-label-form-group controls form-group-custom">
+		                           		<label for="name">Height</label>
+		                               	<input type="number" class="form-control" placeholder="Height" id="height" required data-validation-required-message="Please enter a height.">
+		                               	<p class="help-block text-danger"></p>
+		                            </div>
+		                            <div class="form-group floating-label-form-group controls form-group-custom">
+		                           		<label for="name">Width</label>
+		                               	<input type="number" class="form-control" placeholder="Width" id="width" required data-validation-required-message="Please enter a width">
+		                               	<p class="help-block text-danger"></p>
+		                            </div>
+		                            <div class="form-group floating-label-form-group controls form-group-custom">
+		                           		<label for="name">X-Coordinate</label>
+		                               	<input type="number" class="form-control" placeholder="X-Coordinate" id="x" required data-validation-required-message="Please enter an X-Coordinate">
+		                               	<p class="help-block text-danger"></p>
+		                            </div>
+		                            <div class="form-group floating-label-form-group controls form-group-custom">
+		                           		<label for="name">Y-Coordinate</label>
+		                               	<input type="number" class="form-control" placeholder="Y-Coordinate" id="y" required data-validation-required-message="Please enter a Y-Coordinate">
+		                               	<p class="help-block text-danger"></p>
+		                            </div>
+		                            <!-- Switches (true/false) below here -->
+		                            <div class="form-group-custom switch-wrapper">
+		                            	<span>Transparent Window</span>
+		                            	<label class="switch">
+											<input type="checkbox" id="transparent">
+											<div class="slider"></div>
+										</label>
+		                            </div>
+		                            <div class="form-group-custom switch-wrapper">
+		                            	<span>Window Always On Top</span>
+		                            	<label class="switch">
+											<input type="checkbox" id="alwaysOnTop">
+											<div class="slider"></div>
+										</label>
+		                            </div>
+		                            <div class="form-group-custom switch-wrapper">
+		                            	<span>Show Frame</span>
+		                            	<label class="switch">
+											<input type="checkbox" id="frame">
+											<div class="slider"></div>
+										</label>
+		                            </div>
+	                            </div>
+	                            <div class="form-group-wrapper-sub">
+                    				<h4>Whitelisted Usernames</h4>
+	                    			<p>Whitelisted Usernames is a collection of usernames that are guaranteed to always show messages from those users in the overlay chat app.</p>
+	                    			<div class="add-user-wrapper">
+	                    				<p><a href="#" class="add-user" id="addUserButton">Add Username +</a></p>
+	                    				<div class="form-group floating-label-form-group controls form-group-custom add-user-form-group" id="addUserFormGroup">
+			                           		<label for="name">Username</label>
+			                               	<input type="text" class="form-control" placeholder="Username" id="input_addUsername">
+			                               	<button class="btn btn-success btn-lg" id="submitUserButton">Add</button>
+			                               	<p class="help-block text-danger"></p>
+			                            </div>
+	                    			</div>
+	                    			<div class="users-container">
+	                    			</div>
+                    			</div>
+                    		</div>
+                    		<div class="col-xs-7 form-group-wrapper col-lg-offset-1">
+                    			<div>
+                    				<h4>Twitch Bot Credentials</h4>
+	                    			<p>Provide the bot username and OAUTH token for the app to join the twitch IRC channel specified here.</p>
+	                    			<p>If you don't know your bot's OAUTH token <a href="http://twitchapps.com/tmi/" target="_blank">click here</a> to sign in and get it.</p>
+	                    			<div class="form-group floating-label-form-group controls form-group-custom">
+		                           		<label for="name">Channel Name</label>
+		                               	<input type="text" class="form-control" placeholder="Channel Name" id="channel" required data-validation-required-message="Please enter a channel name.">
+		                               	<p class="help-block text-danger"></p>
+		                            </div>
+		                            <div class="form-group floating-label-form-group controls form-group-custom">
+		                           		<label for="name">Bot Username</label>
+		                               	<input type="text" class="form-control" placeholder="Bot Username" id="botUsername" required data-validation-required-message="Please enter a Bot Username.">
+		                               	<p class="help-block text-danger"></p>
+		                            </div>
+		                            <div class="form-group floating-label-form-group controls form-group-custom">
+		                           		<label for="name">Bot OAUTH Token</label>
+		                               	<input type="text" class="form-control" placeholder="Bot OAUTH Token" id="botPassword" required data-validation-required-message="Please enter a Bot OATH Token.">
+		                               	<p class="help-block text-danger"></p>
+		                            </div>
+                    			</div>
+                    			<div class="form-group-wrapper-sub">
+                    				<h4>User Total Messages Threshold</h4>
+	                    			<p>Indicates to the bot to show chat messages from any user if the user has less than 'x' total messages so far today in the channel, where 'x' is the value input here.</p>
+	                    			<p><i>For example</i>: if you set 2, the first two messages any user enters into your twitch channel is guaranteed be shown by the overlay chat app</p>
+	                    			<div class="form-group floating-label-form-group controls form-group-custom">
+		                           		<label for="name">User Total Messages Threshold</label>
+		                               	<input type="number" class="form-control" placeholder="User Total Messages Threshold" id="totalMessagesThreshold" required data-validation-required-message="Please enter a channel name.">
+		                               	<p class="help-block text-danger"></p>
+		                            </div>
+                    			</div>
+                    			<div class="form-group-wrapper-sub">
+                    				<h4>User Total Bits Donated Threshold</h4>
+	                    			<p>Indicates to the bot to show messages from any user if the user has donated more than 'x' number of bits, where 'x' is the value input here.</p>
+	                    			<p><i>For example</i>: if you set 5000, any messages from users who have donated more than 5000 bits are guaranteed to be shown in the overlay chat app window</p>
+	                    			<div class="form-group floating-label-form-group controls form-group-custom">
+		                           		<label for="name">User Total Bits Donated Threshold</label>
+		                               	<input type="number" class="form-control" placeholder="User Total Bits Donated Threshold" id="totalBitsDonatedThreshold" required data-validation-required-message="Please enter a channel name.">
+		                               	<p class="help-block text-danger"></p>
+		                            </div>
+                    			</div>
+                    			<div class="form-group-wrapper-sub">
+                    				<h4>Whitelisted Phrases</h4>
+	                    			<p>Whitelisted Phrases is a collection of strings that will allow the bot to show any messages containing any of these strings on the overlay chat app. This whitelist is case-insensitive so capitalization does not matter.</p>
+	                    			<div class="add-phrase-wrapper">
+	                    				<p><a href="#" class="add-phrase" id="addPhraseButton">Add New Phrase +</a></p>
+	                    				<div class="form-group floating-label-form-group controls form-group-custom add-phrase-form-group" id="addPhraseFormGroup">
+			                           		<label for="phrase">Phrase</label>
+			                               	<input type="text" class="form-control" placeholder="Phrase" id="input_addPhrase">
+			                               	<button class="btn btn-success btn-lg" id="submitPhraseButton">Add</button>
+			                               	<p class="help-block text-danger"></p>
+			                            </div>
+	                    			</div>
+	                    			<div class="phrases-container">
+	                    			</div>
+                    			</div>
+                    		</div>
+                    	</div>
+                        <br>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-lg center" id="submitConfig">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section -->
+    <section class="success" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>About</h2>
+                    <hr class="star-light">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2">
+                    <p>BearlyChat is a twitch chat application used to customize a set of filters and display a translucent overlay with the filtered chat so you never miss an important message in your chat.</p>
+                </div>
+                <div class="col-lg-4">
+                    <p>Whether its a new user joining your channel for the first time, a valued subscriber/donator, or someone asking a question to you directly you'll see it instantly without all the other chatter!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Contact Me</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-4">
+                	<p>If you have any questions or find any bugs please email meastoso directly with all the details of your inquiry: <b>meastoso@gmail.com</b></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-md-4 col-md-offset-2">
+                        <h3>Around the Web</h3>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="https://twitter.com/meastoso" class="btn-social btn-outline"><span class="sr-only">Twitter</span><i class="fa fa-fw fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="https://twitch.tv/meastoso" class="btn-social btn-outline"><span class="sr-only">Twitch</span><i class="fa fa-fw fa-twitch"></i></a>
+                            </li>
+                            <li>
+                                <a href="http://na.finalfantasyxiv.com/lodestone/character/1557210/" class="btn-social btn-outline"><span class="sr-only">Lodestone</span><i class="fa fa-fw fa-globe"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h3>About BearlyChat</h3>
+                        <p>BearlyChat is a free to use, open source twitch chat application created by <a href="https://twitch.tv/meastoso">meastoso</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; @meastoso 2017
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/freelancer.min.js"></script>
+    
+    <!-- Business Logic -->
+    <script src="js/config_page.js"></script>
+
+</body>
+
+</html>

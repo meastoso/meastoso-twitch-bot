@@ -1,0 +1,31 @@
+{
+  "name": "meastoso-twitch-bot",
+  "version": "1.0.0",
+  "description": "Personal twitch bot for Meastoso",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meastoso/meastoso-twitch-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meastoso/meastoso-twitch-bot/issues"
+  },
+  "homepage": "https://github.com/meastoso/meastoso-twitch-bot#readme",
+  "dependencies": {
+    "express": "^4.14.1",
+    "node-hue-api": "^2.4.2",
+    "play-sound": "^1.1.2",
+    "spotify-control": "^0.1.0",
+    "spotify-web-helper": "^1.14.0",
+    "twitch-js": "1.2.14",
+    "websocket": "^1.0.24"
+  },
+  "devDependencies": {
+    "electron": "^1.6.11"
+  }
+}

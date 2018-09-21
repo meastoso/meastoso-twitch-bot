@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <header>
+    <meta charset="UTF-8">
+    <title>GAY BEARS ARE THE BESTEST!</title>
+    <link href="chat_overlay.css" rel="stylesheet" />
+    <!-- Insert this line above script imports  -->
+	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script language="JavaScript" type="text/javascript" src="../site/resources/js/jquery-1.12.3.min.js"></script>
+    <!-- Insert this line after script imports -->
+	<script>if (window.module) module = window.module;</script>
+  </header>
+  <body>
+	<div id="mainContainer">
+		<!-- EXAMPLE OF DOM CREATED BY "PUSHNEWMESSAGE()" -->
+		<!-- <div class="messageContainer">
+			<span class="username">Radxen</span><span class="message">spoiler alert, i'm actually gay you dumb twinks</span>
+		</div> -->
+	</div>
+	<script>
+	function pushNewMessage(user, message) {
+		var username = user.username;
+		console.log("username: " + username + "   message: " + message + " color: " + user.color);
+		var color = user.color;
+		try {
+			//color = LightenDarkenColor(color, 10); // make color a little brighter so its easier to read
+		}
+		catch (e) {
+			console.log(e);
+		}
+		var usernameSpan = $("<span class='username' style='color: " + color + "'>" + username + "</span>");
+		var messageSpan = $("<span class='message'>" + message + "</span>");
+		var currentMilliseconds = new Date().getTime();
+		var newMessageDiv = $("<div class='messageContainer' data-msgtime='" + currentMilliseconds + "'></div>");
+		newMessageDiv.append(usernameSpan).append(messageSpan);
+		$("#mainContainer").append(newMessageDiv);
+		$(".messageContainer").last().slideDown();
+	}
+	
+	function LightenDarkenColor(col,amt) {
+	    var num = parseInt(col,16);
+	    var r = (num >> 16) + amt;
+	    var b = ((num >> 8) & 0x00FF) + amt;
+	    var g = (num & 0x0000FF) + amt;
+	    var newColor = g | (b << 8) | (r << 16);
+	    return newColor.toString(16);
+	}
+	
+	$(function () {
+	    // if user is running mozilla then use it's built-in WebSocket
+	    window.WebSocket = window.WebSocket || window.MozWebSocket;
+
+	    var connection = new WebSocket('ws://127.0.0.1:1338');
+
+	    connection.onopen = function () {
+	        // connection is opened and ready to use
+			console.log("connection is open and ready to use for websockets");
+	    };
+
+	    connection.onerror = function (error) {
+	        // an error occurred when sending/receiving data
+			console.log("error occurred setting up connection: " + error);
+	    };
+
+	    connection.onmessage = function (message) {
+	        // try to decode json (I assume that each message from server is json)
+	        try {
+	            var json = JSON.parse(message.data);
+				console.log("got the json, object is:");
+				console.log(json);
+				pushNewMessage(json.user, json.message);
+				
+	        } catch (e) {
+	        	console.log(e);
+	            console.log('This doesn\'t look like a valid JSON: ', message.data);
+	            return;
+	        }
+	        // handle incoming message
+	    };
+	});
+	
+	// clean-up old messages
+	// TODO: allow user to configure interval
+	var timeout = 3000; // clean-up every 3 seconds
+	var secondsToKeepMessages = 20; // message will dissapear in 10 seconds after appearing TODO: get this from config
+	var cleanupTask = function() {
+		var currentMilliseconds = new Date().getTime();
+	    // loop through each message container and check to see if we should purge it
+	    $(".messageContainer").each(function() {
+	    	var thisContainerTime = parseInt($(this).data("msgtime"));
+	    	if (currentMilliseconds > thisContainerTime + (secondsToKeepMessages*1000)) {
+	    		// over 10 seconds old, remove
+	    		$(this).slideUp(function() {
+		    		$(this).remove();
+	    		});
+	    	}	    	
+	    });
+	};
+	setInterval(cleanupTask, timeout);
+  	</script>
+  </body>
+</html>
