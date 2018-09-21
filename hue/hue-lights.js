@@ -7,7 +7,7 @@ var overlayConfig = chatOverlayDAO.getConfig();
 var hueModule = require("node-hue-api");
 var HueApi = hueModule.HueApi;
 var lightState = hueModule.lightState;
-var username = overlayConfig.twitch.channelName;
+var username = overlayConfig.hue.username;
 var host;
 var api;
 

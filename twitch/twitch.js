@@ -6,7 +6,7 @@ var TwitchJS = require('twitch-js');
 var chatOverlayDAO = require('../chat_overlay/chat_overlay_DAO.js');
 var chatParser = require('../chat_overlay/chat_parser.js');
 var overlayConfig = chatOverlayDAO.getConfig();
-//var hueController = require('./hue/hue-lights.js'); // TODO: restore after testing at home
+var hueController = require('../hue/hue-lights.js'); // TODO: restore after testing at home
 var chatOverlay = null; // only set if app.js arg said to show window
 var viewerQueue = require('./viewer-queue.js');
 
