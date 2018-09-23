@@ -9,6 +9,7 @@ var overlayConfig = chatOverlayDAO.getConfig();
 var hueController = require('../hue/hue-lights.js'); // TODO: restore after testing at home
 var chatOverlay = null; // only set if app.js arg said to show window
 var viewerQueue = require('./viewer-queue.js');
+var player = require('play-sound')(opts = {});
 
 // configure twitch connection options
 var channelName = overlayConfig.twitch.channelName;
@@ -71,7 +72,7 @@ client.on('chat', function(channel, user, message, self) {
         /* ###########################
          *     !misszo
          * ########################### */
-        else if (message.startsWith("!misszo")) {
+        if (message.startsWith("!misszo")) {
         //if (message.startsWith("!misszo")) { // TODO: restore this after we get the the sendClientMsg() function working with electron
             var msg = "did you guys know @miss_zo is an AMAZING cook?!?! check out her cooking blog at https://misszocooks.wordpress.com";
             client.say(channelName, msg);
