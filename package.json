@@ -18,7 +18,7 @@
   "homepage": "https://github.com/meastoso/meastoso-twitch-bot#readme",
   "dependencies": {
     "express": "^4.14.1",
-    "node-hue-api": "^2.4.2",
+    "node-hue-api": "^4.0.8",
     "play-sound": "^1.1.2",
     "spotify-control": "^0.1.0",
     "spotify-web-helper": "^1.14.0",

@@ -147,7 +147,10 @@ client.on('chat', function(channel, user, message, self) {
         else if (message.startsWith("!getinloser")) {
             // $ mplayer foo.mp3
             player.play('D:\\twitch_plugins\\sounds\\getInLoser.mp3', function(err){
-                if (err) throw err
+                if (err) {
+                    console.log("error playing sound");
+                    console.log(err);
+                }
             })
         }
         /* ###########################
@@ -156,7 +159,10 @@ client.on('chat', function(channel, user, message, self) {
         else if (message.startsWith("!karen")) {
             // $ mplayer foo.mp3
             player.play('D:\\twitch_plugins\\sounds\\ohMyGodKaren.mp3', function(err){
-                if (err) throw err
+                if (err) {
+                    console.log("error playing sound");
+                    console.log(err);
+                }
             })
         }
         /* ###########################
@@ -165,7 +171,10 @@ client.on('chat', function(channel, user, message, self) {
         else if (message.startsWith("!sears")) {
             // $ mplayer foo.mp3
             player.play('D:\\twitch_plugins\\sounds\\sears.mp3', function(err){
-                if (err) throw err
+                if (err) {
+                    console.log("error playing sound");
+                    console.log(err);
+                }
             })
         }
         /* ###########################
@@ -174,7 +183,10 @@ client.on('chat', function(channel, user, message, self) {
         else if (message.startsWith("!fetch")) {
             // $ mplayer foo.mp3
             player.play('D:\\twitch_plugins\\sounds\\fetch.mp3', function(err){
-                if (err) throw err
+                if (err) {
+                    console.log("error playing sound");
+                    console.log(err);
+                }
             })
         }
         /* ###########################
@@ -183,7 +195,10 @@ client.on('chat', function(channel, user, message, self) {
         else if (message.startsWith("!butter")) {
             // $ mplayer foo.mp3
             player.play('D:\\twitch_plugins\\sounds\\butterCarb.mp3', function(err){
-                if (err) throw err
+                if (err) {
+                    console.log("error playing sound");
+                    console.log(err);
+                }
             })
         }
         /* ###########################
@@ -192,7 +207,10 @@ client.on('chat', function(channel, user, message, self) {
         else if (message.startsWith("!pink")) {
             // $ mplayer foo.mp3
             player.play('D:\\twitch_plugins\\sounds\\pink.mp3', function(err){
-                if (err) throw err
+                if (err) {
+                    console.log("error playing sound");
+                    console.log(err);
+                }
             })
         }
         /* ###########################
@@ -201,7 +219,10 @@ client.on('chat', function(channel, user, message, self) {
         else if (message.startsWith("!shedoesntgohere")) {
             // $ mplayer foo.mp3
             player.play('D:\\twitch_plugins\\sounds\\doesntGoHere.mp3', function(err){
-                if (err) throw err
+                if (err) {
+                    console.log("error playing sound");
+                    console.log(err);
+                }
             })
         }
         /* ###########################
@@ -210,7 +231,10 @@ client.on('chat', function(channel, user, message, self) {
         else if (message.startsWith("!youcantsitwithus")) {
             // $ mplayer foo.mp3
             player.play('D:\\twitch_plugins\\sounds\\youCantSitWithUs.mp3', function(err){
-                if (err) throw err
+                if (err) {
+                    console.log("error playing sound");
+                    console.log(err);
+                }
             })
         }
         /* ###########################
@@ -325,7 +349,7 @@ client.on('chat', function(channel, user, message, self) {
          *     !aethernet
          * ########################### */
         else if (message.startsWith("!aethernet")) {
-            var msg = "The Aethernet Team is currently running our FFXIV 5.2 marathon! Earn !anima just by hanging out here and use the anima you collect to bid on raffle giveaways!";
+            var msg = "The Aethernet Team is currently running our FFXIV 5.3 marathon! Earn !anima just by hanging out here and use the anima you collect to bid on raffle giveaways!";
             client.say(channelName, msg);
         }
         /* ###########################
@@ -342,7 +366,7 @@ client.on('chat', function(channel, user, message, self) {
             var placeInQueue = viewerQueue.addUserToQueue(user);
             //var msg = "User " + username + " has been added the party queue! Please have the encounter unlocked. If you do not have the encounter unlocked before joining the party we will move to the next person in queue.";
             //var msg = "User " + username + " has been added to the Ex Primal queue! You are #" + placeInQueue + " in line!";
-            var msg = "User " + username + " has been added to the duett queue! You are #" + placeInQueue + " in line!";
+            var msg = "User " + username + " has been added to the duet queue! You are #" + placeInQueue + " in line!";
             client.say(channelName, msg);
         }
         else if (message.startsWith("!position")) {
@@ -355,7 +379,7 @@ client.on('chat', function(channel, user, message, self) {
          *     !youtube
          * ########################### */
         else if (message.startsWith("!youtube")) {
-            var msg = "Meast is starting a fun new web series called 'The Big Gay Lets Play' here: https://www.youtube.com/biggayletsplay";
+            var msg = "Meast co-hosts a Gaymer Bear YouTube show called 'The Big Gay Lets Play'! Check it out here: https://www.youtube.com/biggayletsplay";
             client.say(channelName, msg);
         }
         /* ###########################
@@ -363,13 +387,6 @@ client.on('chat', function(channel, user, message, self) {
          * ########################### */
         else if (message.startsWith("!botcheck")) {
             var msg = "meastoLUL meastoLove meastoLUL";
-            client.say(channelName, msg);
-        }
-        /* ###########################
-         *     !midboss
-         * ########################### */
-        else if (message.startsWith("!midboss")) {
-            var msg = "The Summer of Pride is a month-long event of LGBTQIA+ (queer) streamers playing queer games, throughout the month of June. Click here to learn more: https://summerofpride.tv/";
             client.say(channelName, msg);
         }
         /* ###########################
@@ -481,13 +498,6 @@ client.on('chat', function(channel, user, message, self) {
          * ########################### */
         else if (message.startsWith("!aether")) {
             dc = 'aether';
-        }
-        /* ###########################
-         *     !marriage
-         * ########################### */
-        else if (message.startsWith("!marriage")) {
-            var msg = "Meast got MARRIED to his best friend Andy! We are going to have a fun celebration stream on 8/18 so please look forward to celebrating with us then! XOXO";
-            client.say(channelName, msg);
         }
         /* ###########################
          *     !garbage

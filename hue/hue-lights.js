@@ -2,36 +2,39 @@
  * TODO: describe this module
  */
 
-var chatOverlayDAO = require('../chat_overlay/chat_overlay_DAO.js');
-var overlayConfig = chatOverlayDAO.getConfig();
-var hueModule = require("node-hue-api");
-var HueApi = hueModule.HueApi;
-var lightState = hueModule.lightState;
-var username = overlayConfig.hue.username;
-var host;
-var api;
+const chatOverlayDAO = require('../chat_overlay/chat_overlay_DAO.js');
+const overlayConfig = chatOverlayDAO.getConfig();
+const ipAddress = overlayConfig.hue.ipAddress;
+const v3 = require('node-hue-api').v3
+	, hueApi = v3.api;
+let api = null;
+const LightState = v3.lightStates.LightState;
+const username = overlayConfig.hue.username;
 
-// office lights are: 7, 9 and 10
-
-var displayResult = function(result) {
+const displayResult = function(result) {
 	console.log(JSON.stringify(result));
 };
 
-// get bridges and set host/api from bridge result
-hueModule.nupnpSearch(function(err, result) {
-    if (err) throw err;
-    host = result[0].ipaddress;
-    api = new HueApi(host, username);
-    api.lights()
-	    .then(displayResult)
-	    .catch(function(err) {
-	    	console.log('chris error');
-	    })
-	    .done();
-});
+console.log("attempting to connect to hue bridge");
+hueApi.createLocal(ipAddress).connect(username)
+	.then(authenticatedApi => {
+		api = authenticatedApi;
+		authenticatedApi.configuration.getConfiguration()
+			.then(bridgeConfig => {
+				console.log(`Connected to Hue Bridge: ${bridgeConfig.name} :: ${bridgeConfig.ipaddress}`);
+			})
+			.catch(err => {
+				console.log("error getting bridge config:");
+				console.log(err);
+			})
+	})
+	.catch(err => {
+		console.log("ERROR getting authenticated Hue API:");
+		console.log(err);
+	});
 
 function hexToRgb(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+	const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
         r: parseInt(result[1], 16),
         g: parseInt(result[2], 16),
@@ -39,86 +42,76 @@ function hexToRgb(hex) {
     } : null;
 }
 
-//var state = lightState.create().on().white(500, 100);
-//var state = lightState.create().colorLoop().transitionFast();
-//var state = lightState.create().rgb(254, 0, 0);
-//var state = lightState.create().rgb(0, 254, 0);
-//var state = lightState.create().rgb(0, 0, 254);
-//var state = lightState.create().longAlert();
-//var state = lightState.create().effect('none');
-var redState = lightState.create().rgb(255, 0, 0);
-var yellowState = lightState.create().rgb(255, 255, 0);
-var greenState = lightState.create().rgb(0, 255, 0);
-var cyanState = lightState.create().rgb(0, 254, 254);
-var blueState = lightState.create().rgb(0, 0, 255);
-var magentaState = lightState.create().rgb(255, 0, 255);
-var loopState = lightState.create().colorLoop(); // TODO: copy this
-loopState.longAlert();
-var lightIds = [7, 9, 10, 11];
+const redState = new LightState().rgb(255, 0, 0);
+const yellowState = new LightState().rgb(255, 255, 0);
+const greenState = new LightState().rgb(0, 255, 0);
+const cyanState = new LightState().rgb(0, 254, 254);
+const blueState = new LightState().rgb(0, 0, 255);
+const magentaState = new LightState().rgb(255, 0, 255);
+const loopState = new LightState().effectColorLoop(); // TODO: copy this
+// NOTE: Light ID 7 is the bloom
+const lightIds = [9, 10, 11];
  
 function setOfficeLights(state) {
    try {
 	for (let i = 0; i < lightIds.length; i++) {
-		api.setLightState(lightIds[i], state)
+		api.lights.setLightState(lightIds[i], state)
 			.then(displayResult)
 			.catch(function(err) {
-		    	console.log('chris error');
-		    })
-			.done();
+		    	console.log('Error calling setLightState for lightId: ' + lightIds[i]);
+		    	console.log(err);
+		    });
 	}
 	} catch (e) {
 		console.log('exception!');
+		console.log(e);
 	}
 }
 
 function getLightStateFromRGB(r, g, b) {
-	return customState = lightState.create().rgb(r, g, b);
+	return new LightState().rgb(r, g, b);
 }
 
 function restoreState(lightId, state) {
-	console.log('got restorestate call with lightId: ' + lightId);
-	console.log(state);
 	try {
-	api.setLightState(lightId, state)
+		api.lights.setLightState(lightId, state)
 			.then(displayResult)
 			.catch(function(err) {
-		    	console.log('chris error');
+		    	console.log('Error setLightState in restoreState():');
+		    	console.log(err);
 		    })
-			.done();
 	} catch (e) {
 		console.log('exception!');
+		console.log(e);
 	}
 }
 
 function loopOfficeLights() {
 	try {
-   // first retain existing light states
-    api.lights()
-        .then(function(results) {
-        console.log('just finished api.lights() in loop method');
-           // store results here then change light state to loop then set back
-         var currentStateMap = {};
-         if (!results || !results.lights) {
-            console.log('ERROR: DID NOT FIND LIGHTS IN RESULTS VARIABLE WHEN CALLING LOOPOFFICELIGHTS()');
-            return;
-         }
-         // loop through each light and store the state as value and ID as key in map
-         for (let i = 0; i < results.lights.length; i++) {
-                currentStateMap[results.lights[i].id] = results.lights[i].state;
-         }
-         console.log('currentStateMap is: ');
-         console.log(currentStateMap);
-         // now set the states to loop
-         for (let i = 0; i < lightIds.length; i++) {
-				api.setLightState(lightIds[i], loopState);
-				let lightState = currentStateMap[lightIds[i]];
-				lightState.effect = 'none';
-				setTimeout(restoreState, 15000, lightIds[i], lightState);
-         }
-      })
-		.done();
+		lightIds.forEach(lightId => {
+			// first get LightState to reset after loop
+			api.lights.getLightState(lightId)
+				.then(existingState => {
+					// now set to loop
+					api.lights.setLightState(lightId, loopState)
+						.then(response => {
+							existingState.effect = 'none';
+							// timeout and restoreState after loop is done running
+							setTimeout(restoreState, 15000, lightId, existingState);
+						})
+						.catch(err1 => {
+							console.log("failed to setLightState to loop for LightId: " + lightId);
+							console.log(err1);
+						})
+				})
+				.catch(err => {
+					console.log("error getting lightstate for ID: " + lightId);
+					console.log(err);
+				})
+		});
 	} catch (e) {
 		console.log('exception!');
+		console.log(e);
 	}
 }
 
@@ -146,12 +139,12 @@ module.exports = {
 			setOfficeLights(magentaState);
 		},
 		setCustom: function(r, g, b) {
-			var customState = getLightStateFromRGB(r, g, b);
+			const customState = getLightStateFromRGB(r, g, b);
 			setOfficeLights(customState);
 		},
 		setHex: function(hexValue) {
-			var rgbObj = hexToRgb(hexValue);
-            var hexState = getLightStateFromRGB(rgbObj.r, rgbObj.g, rgbObj.b);
+			const rgbObj = hexToRgb(hexValue);
+			const hexState = getLightStateFromRGB(rgbObj.r, rgbObj.g, rgbObj.b);
             setOfficeLights(hexState);
 		},
 		setColorLoop: function() {
