@@ -22,6 +22,9 @@
 		var username = user.username;
 		console.log("username: " + username + "   message: " + message + " color: " + user.color);
 		var color = user.color;
+    if (!color) {
+      color = 'white';
+    }
 		try {
 			//color = LightenDarkenColor(color, 10); // make color a little brighter so its easier to read
 		}

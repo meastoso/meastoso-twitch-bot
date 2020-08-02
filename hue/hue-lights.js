@@ -22,6 +22,12 @@ hueModule.nupnpSearch(function(err, result) {
     if (err) throw err;
     host = result[0].ipaddress;
     api = new HueApi(host, username);
+    api.lights()
+	    .then(displayResult)
+	    .catch(function(err) {
+	    	console.log('chris error');
+	    })
+	    .done();
 });
 
 function hexToRgb(hex) {
@@ -46,21 +52,74 @@ var greenState = lightState.create().rgb(0, 255, 0);
 var cyanState = lightState.create().rgb(0, 254, 254);
 var blueState = lightState.create().rgb(0, 0, 255);
 var magentaState = lightState.create().rgb(255, 0, 255);
+var loopState = lightState.create().colorLoop(); // TODO: copy this
+loopState.longAlert();
+var lightIds = [7, 9, 10, 11];
  
 function setOfficeLights(state) {
-	api.setLightState(7, state)
-	    .then(displayResult)
-	    .done();
-	api.setLightState(9, state)
-	    .then(displayResult)
-	    .done();
-	api.setLightState(10, state)
-	    .then(displayResult)
-	    .done();
+   try {
+	for (let i = 0; i < lightIds.length; i++) {
+		api.setLightState(lightIds[i], state)
+			.then(displayResult)
+			.catch(function(err) {
+		    	console.log('chris error');
+		    })
+			.done();
+	}
+	} catch (e) {
+		console.log('exception!');
+	}
 }
 
 function getLightStateFromRGB(r, g, b) {
 	return customState = lightState.create().rgb(r, g, b);
+}
+
+function restoreState(lightId, state) {
+	console.log('got restorestate call with lightId: ' + lightId);
+	console.log(state);
+	try {
+	api.setLightState(lightId, state)
+			.then(displayResult)
+			.catch(function(err) {
+		    	console.log('chris error');
+		    })
+			.done();
+	} catch (e) {
+		console.log('exception!');
+	}
+}
+
+function loopOfficeLights() {
+	try {
+   // first retain existing light states
+    api.lights()
+        .then(function(results) {
+        console.log('just finished api.lights() in loop method');
+           // store results here then change light state to loop then set back
+         var currentStateMap = {};
+         if (!results || !results.lights) {
+            console.log('ERROR: DID NOT FIND LIGHTS IN RESULTS VARIABLE WHEN CALLING LOOPOFFICELIGHTS()');
+            return;
+         }
+         // loop through each light and store the state as value and ID as key in map
+         for (let i = 0; i < results.lights.length; i++) {
+                currentStateMap[results.lights[i].id] = results.lights[i].state;
+         }
+         console.log('currentStateMap is: ');
+         console.log(currentStateMap);
+         // now set the states to loop
+         for (let i = 0; i < lightIds.length; i++) {
+				api.setLightState(lightIds[i], loopState);
+				let lightState = currentStateMap[lightIds[i]];
+				lightState.effect = 'none';
+				setTimeout(restoreState, 15000, lightIds[i], lightState);
+         }
+      })
+		.done();
+	} catch (e) {
+		console.log('exception!');
+	}
 }
 
 // public methods
@@ -94,5 +153,8 @@ module.exports = {
 			var rgbObj = hexToRgb(hexValue);
             var hexState = getLightStateFromRGB(rgbObj.r, rgbObj.g, rgbObj.b);
             setOfficeLights(hexState);
+		},
+		setColorLoop: function() {
+			loopOfficeLights();
 		}
 }

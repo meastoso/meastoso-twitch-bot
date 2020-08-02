@@ -16,6 +16,7 @@ const addUserToQueue = function(user) {
     else {
         regQueue.push(user);
     }
+    return subQueue.length + regQueue.length;
 };
 
 /**
@@ -39,8 +40,24 @@ const getUserFromQueue = function() {
     return username;
 };
 
+const getPlaceInQueue = function(user) {
+	try {
+		for (let i = 0; i < subQueue.length; i++) {
+			const thisUser = subQueue[i];
+			if (thisUser.username == user.username) {
+				return i + 1;
+			}
+		}
+		return -1;
+	}
+	catch (e) {
+		console.log('caught exception in getPlaceInQueue()');
+	}
+}
+
 // public methods
 module.exports = {
     addUserToQueue: addUserToQueue,
-    getUserFromQueue: getUserFromQueue
+    getUserFromQueue: getUserFromQueue,
+    getPlaceInQueue: getPlaceInQueue
 }

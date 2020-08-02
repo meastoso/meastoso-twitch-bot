@@ -41,9 +41,20 @@ client.on('connected', function(address, port) {
     console.log("Connected!");
 });
 
+client.on('subscription', (channel, username, method, message, userstate) => {
+	console.log('-------------------------------------------------------------');
+	console.log('SUBSCRIPTION EVENT FIRED!!!');
+	console.log('-------------------------------------------------------------');
+	
+});
+
 let showWindow = false;
 let sessionId = '';
+let lobbyId = '';
 let iterator = 0;
+let deathCount = 0;
+let garbageCount = 0;
+let dc = 'primal';
 
 const setShowWindow = function(showWindowBool) {
     showWindow = showWindowBool;
@@ -117,6 +128,9 @@ client.on('chat', function(channel, user, message, self) {
          * ########################### */
         else if (message.startsWith("!shoutout ") || message.startsWith("!so ")) {
             var shoutoutTarget = message.substring(10, message.length);
+            if (message.startsWith("!so ")) {
+            	shoutoutTarget = message.substring(4, message.length);
+            }
             var msg = "My dear friend " + shoutoutTarget + " is an AWESOME STREAMER! Check them out at www.twitch.tv/" + shoutoutTarget;
             client.say(channelName, msg);
         }
@@ -287,25 +301,75 @@ client.on('chat', function(channel, user, message, self) {
             client.say(channelName, msg);
         }
         /* ###########################
+         *     !vote
+         * ########################### */
+        else if (message.startsWith("!vote")) {
+            var msg = "VOTE! VOTE! VOTE! If you are one of our American cohorts make sure you get out and vote on Nov. 6th which is THIS TUESDAY OMG!!!!!! It will make meast SUPER WET!";
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !act
+         * ########################### */
+        else if (message.startsWith("!act")) {
+            var msg = "The damage meter is a plugin for Advanced Combat Tracker (ACT) which you can find the base program and FFXIV plugin here: https://advancedcombattracker.com/download.php  The overlay is called MopiMopi which you can find here: https://docs.google.com/presentation/d/1U7-Vgv6UA2_EFdvw3m8BI-5-9T91WeKTflDuR7rEx-U/edit#slide=id.p";
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !cactbot
+         * ########################### */
+        else if (message.startsWith("!cactbot")) {
+            var msg = "Interested in the ACT plugin that shows the upcoming boss abilities? Go check out FFXIV Cactbot plugin here: https://github.com/quisquous/cactbot";
+            client.say(channelName, msg);
+        }
+        /* ###########################
          *     !aethernet
          * ########################### */
         else if (message.startsWith("!aethernet")) {
-            var msg = "The Aethernet Team is currently running our Patch 4.4 marathon! Earn !anima just by hanging out here and use the anima you collect to bid on raffle giveaways!";
+            var msg = "The Aethernet Team is currently running our FFXIV 5.2 marathon! Earn !anima just by hanging out here and use the anima you collect to bid on raffle giveaways!";
             client.say(channelName, msg);
         }
         /* ###########################
          *     !suzaku
          * ########################### */
-        else if (message.startsWith("!suzaku") || message.startsWith("!suzy")) {
-            var msg = "Meastoso is running Suzaku Extreme with viewers ALL DAY! Use !join to get in the queue and we'll use that queue to invite viewers into the Suzaku EX Clear parties! Priority is given to subscribers and viewers who have yet to clear the fight.";
+        /*else if (message.startsWith("!extreme")) {
+            var msg = "Meastoso is running Titania Extreme and Innocence Extreme with viewers ALL DAY on the Primal DC! CLEAR GUARANTEED! Use !join to get in the queue!";
             client.say(channelName, msg);
-        }
+        }*/
         /* ###########################
          *     !join
          * ########################### */
         else if (message.startsWith("!join")) {
-            viewerQueue.addUserToQueue(user);
-            var msg = "User " + username + " has been added the party queue! Please have the encounter unlocked. If you do not have the encounter unlocked before joining the party we will move to the next person in queue.";
+            var placeInQueue = viewerQueue.addUserToQueue(user);
+            //var msg = "User " + username + " has been added the party queue! Please have the encounter unlocked. If you do not have the encounter unlocked before joining the party we will move to the next person in queue.";
+            //var msg = "User " + username + " has been added to the Ex Primal queue! You are #" + placeInQueue + " in line!";
+            var msg = "User " + username + " has been added to the duett queue! You are #" + placeInQueue + " in line!";
+            client.say(channelName, msg);
+        }
+        else if (message.startsWith("!position")) {
+            var placeInQueue = viewerQueue.getPlaceInQueue(user);
+            //var msg = "User " + username + " has been added the party queue! Please have the encounter unlocked. If you do not have the encounter unlocked before joining the party we will move to the next person in queue.";
+            var msg = "You are #" + placeInQueue + " in queue!";
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !youtube
+         * ########################### */
+        else if (message.startsWith("!youtube")) {
+            var msg = "Meast is starting a fun new web series called 'The Big Gay Lets Play' here: https://www.youtube.com/biggayletsplay";
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !botcheck
+         * ########################### */
+        else if (message.startsWith("!botcheck")) {
+            var msg = "meastoLUL meastoLove meastoLUL";
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !midboss
+         * ########################### */
+        else if (message.startsWith("!midboss")) {
+            var msg = "The Summer of Pride is a month-long event of LGBTQIA+ (queer) streamers playing queer games, throughout the month of June. Click here to learn more: https://summerofpride.tv/";
             client.say(channelName, msg);
         }
         /* ###########################
@@ -330,9 +394,131 @@ client.on('chat', function(channel, user, message, self) {
                 client.say(channelName, errormsg);
                 return;
             }
-            var msg = pulledUsername + "! Come on down! Please join the Private Party Finder hosted by Meastoso on Primal Datacenter with password: 6969";
+            //var msg = pulledUsername + "! Come on down! Please join the Private Party Finder hosted by Meastoso on Primal Datacenter with password: 6969";
+            var msg = pulledUsername + "! LET'S SING! ARE YOU HERE???";
             client.say(channelName, msg);
         }
+        /* ###########################
+         *     !friendcode
+         * ########################### */
+        else if (message.startsWith("!friendcode") || message.startsWith("!friend")) {
+        		var fc = "SW-4417-9441-6707";
+            var msg = "Meastoso's friend code is: " + fc;
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !setlobby
+         * ########################### */
+        else if (username === channelName && message.startsWith("!setlobby ")) {
+            lobbyId = message.substring(10, message.length);
+            var msg = "Successfully set Lobby ID to: " + lobbyId;
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !lobby
+         * ########################### */
+        else if (message.startsWith("!lobby")) {
+            var msg = "Meastoso's current game lobby ID: " + lobbyId;
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !vocalrest
+         * ########################### */
+        else if (message.startsWith("!vocalrest")) {
+            var msg = "Meast strained his voice and must stay on light vocal rest for a while; he'll be back to normal again soon!";
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !bnet
+         * ########################### */
+        else if (message.startsWith("!bnet")) {
+            var msg = "Add meast on battle.net: --> meastoso#1418 <--";
+            client.say(channelName, msg);
+        }
+        // setColorLoop
+        /* ###########################
+         *     !loop
+         * ########################### */
+        else if (message.startsWith("!loop")) {
+            hueController.setColorLoop();
+        }
+        /* ###########################
+         *     !shedead
+         * ########################### */
+        else if (message.startsWith("!shedead")) {
+            deathCount++;
+            var msg = "This dumb bitch has now died " + deathCount + " times...";
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !setdeathcount
+         * ########################### */
+        else if (username === channelName && message.startsWith("!setdeathcount ")) {
+            deathCount = message.substring(15, message.length);
+            var msg = "Successfully set Death Count to: " + deathCount;
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !linkshell
+         * ########################### */
+        else if (message.startsWith("!linkshell")) {
+            var msg = "We have a community linkshell on Primal DC! To join, world-transfer to Behemoth server, player search for 'meastoso disperde' or 'mysidia baron' and send us a tell for invite!";
+            if (dc == 'crystal') {
+            	msg = "We have a community linkshell on Crystal DC! To join, world-transfer to Coeurl server, player search for 'meastoso crystal' or world-transfer to Mateus and search for 'ashirani riki' and send us a tell for invite!";
+            } else if (dc == 'aether') {
+            	msg = "We have a community linkshell on Aether DC! To join, world-transfer to Faerie server, player search for 'meastoso adipem'";
+            }
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !crystal
+         * ########################### */
+        else if (message.startsWith("!crystal")) {
+            dc = 'crystal';
+        }
+        /* ###########################
+         *     !aether
+         * ########################### */
+        else if (message.startsWith("!aether")) {
+            dc = 'aether';
+        }
+        /* ###########################
+         *     !marriage
+         * ########################### */
+        else if (message.startsWith("!marriage")) {
+            var msg = "Meast got MARRIED to his best friend Andy! We are going to have a fun celebration stream on 8/18 so please look forward to celebrating with us then! XOXO";
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !garbage
+         * ########################### */
+        else if (message.startsWith("!garbage")) {
+				garbageCount++;
+            var msg = "meastoLUL meastoLUL meastoLUL Meast has now referred to himself as 'garbage' " + garbageCount + " times! meastoLUL meastoLUL meastoLUL";
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !help
+         * ########################### */
+        else if (message.startsWith("!help")) {
+            var msg = "Commands are: !meangirls, !linkshell, !garbage, !friendcode, !bnet, !aethernet, !act, !cactbot, !subcolor, !colors, !so, !discord, !server, !hype";
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !hebi
+         * ########################### */
+        else if (message.startsWith("!hebi")) {
+            var msg = "meastoDaddy meastoCry FeelsHebiMan meastoCry meastoDaddy";
+            client.say(channelName, msg);
+        }
+        /* ###########################
+         *     !aly
+         * ########################### */
+        else if (message.startsWith("!aly")) {
+            var msg = "meastoLove meastoLove FEELS ALY LADIES meastoLove meastoLove";
+            client.say(channelName, msg);
+        }
+        
     }
     catch(error) {
         console.log("ERROR: " + error);
@@ -343,6 +529,11 @@ client.on('chat', function(channel, user, message, self) {
 client.on("subscription", function (channel, username) {
     var msg = 'Thanks for bearbacking, ' + username + '! Also, make sure to practice safe-sex, xoxo';
     client.say(channelName, msg);
+    hueController.setColorLoop();
+});
+
+client.on("resub", (channel, username, months, message, userstate, methods) => {
+    hueController.setColorLoop();
 });
 
 // public methods
